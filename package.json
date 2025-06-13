@@ -12,6 +12,7 @@
     "deploy": "shopify app deploy"
   },
   "dependencies": {
+    "@shopify/app-bridge-react": "^4.1.10",
     "mongoose": "^8.15.1"
   },
   "author": "orange",

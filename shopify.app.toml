@@ -3,11 +3,12 @@
 client_id = "5045fae69d21ceaade75222335f45840"
 name = "selleasy-upsell-crosell"
 handle = "selleasy-upsell-crosell"
-application_url = "https://automated-galleries-secondary-drug.trycloudflare.com"
+application_url = "https://pensions-contamination-intimate-dept.trycloudflare.com"
 embedded = true
 
 [build]
 automatically_update_urls_on_dev = true
+include_config_on_deploy = true
 
 [webhooks]
 api_version = "2025-01"
@@ -26,9 +27,9 @@ scopes = "read_customers,read_draft_orders,read_products,read_themes,write_custo
 
 [auth]
 redirect_urls = [
-  "https://automated-galleries-secondary-drug.trycloudflare.com/auth/callback",
-  "https://automated-galleries-secondary-drug.trycloudflare.com/auth/shopify/callback",
-  "https://automated-galleries-secondary-drug.trycloudflare.com/api/auth/callback"
+  "https://pensions-contamination-intimate-dept.trycloudflare.com/auth/callback",
+  "https://pensions-contamination-intimate-dept.trycloudflare.com/auth/shopify/callback",
+  "https://pensions-contamination-intimate-dept.trycloudflare.com/api/auth/callback"
 ]
 
 [pos]

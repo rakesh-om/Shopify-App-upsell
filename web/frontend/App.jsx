@@ -25,8 +25,9 @@ export default function App() {
             <a href="/" rel="home" />
             <a href="/pagename">{t("NavigationMenu.pageName")}</a>
           </NavMenu>
+          <Page1/>
          
-        </QueryProvider>
+        </QueryProvider>S
       </BrowserRouter>
     </PolarisProvider>
   );

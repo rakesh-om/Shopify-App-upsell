@@ -5,10 +5,7 @@ import { readFileSync } from "fs";
 import serveStatic from "serve-static";
 import dotenv from "dotenv";
 // import { connectDB } from "./Backend/database/db.js"; // ✅ named import
-import connectDB from "./Backend/database/db.js"; // ✅ Default import
-
-
-
+import connectDB from "./Backend/database/db.js"; 
 import shopify from "./shopify.js";
 import productCreator from "./product-creator.js";
 import PrivacyWebhookHandlers from "./privacy.js";
@@ -76,7 +73,6 @@ app.post("/api/products", async (_req, res) => {
     res.status(500).send({ success: false, error: error.message });
   }
 });
-
 // ✅ Serve frontend build (React + Vite)
 app.use(shopify.cspHeaders());
 app.use(serveStatic(STATIC_PATH, { index: false }));

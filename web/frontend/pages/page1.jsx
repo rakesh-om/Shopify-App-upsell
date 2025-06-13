@@ -7,4 +7,4 @@ const Page1 = () => {
   return <UpsellOfferForm />;
 };
 
-export default Page1;
+export default Page1;    

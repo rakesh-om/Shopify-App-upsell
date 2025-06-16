@@ -16,18 +16,20 @@ export default function App() {
           {/* Shopify App Navigation Menu */}
           <NavMenu>
             <a href="/" rel="home">
-             Home
+              Home
             </a>
-            <a href="/Page1">
-               Form Page
-            </a>
+            <a href="/Page1">Customize</a>
+            <a href="/">Help</a>
           </NavMenu>
 
           {/* ✅ Routing configuration */}
-            <Routes>
+
+          <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/Page1" element={<Page1 />} />
           </Routes>
+
+          {/* <Route path="/Page1" element={<Page1 />} /> */}
         </QueryProvider>
       </BrowserRouter>
     </PolarisProvider>

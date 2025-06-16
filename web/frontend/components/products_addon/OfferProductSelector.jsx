@@ -1,5 +1,12 @@
-import { ResourceList, Checkbox, TextStyle } from "@shopify/polaris";
 import React, { useState } from "react";
+import {
+  Page,
+  Button,
+  ResourceList,
+  ResourceItem,
+  Text,
+  Card,
+} from "@shopify/polaris";
 
 const sampleProducts = [
   { id: "1", name: "JACKET RONIN - BLACK (M)" },
@@ -7,32 +14,38 @@ const sampleProducts = [
 ];
 
 const OfferProductSelector = () => {
-  const [selectedIds, setSelectedIds] = useState([]);
+  const [selectedItems, setSelectedItems] = useState([]);
 
-  const handleSelectionChange = (id) => {
-    setSelectedIds(prev =>
-      prev.includes(id) ? prev.filter(i => i !== id) : [...prev, id]
-    );
+  const handleSelectionChange = (selected) => {
+    setSelectedItems(selected);
   };
 
   return (
-    <>
-      <p className="Polaris-Label__Text">Select Add-on Products</p>
-      <ResourceList
-        resourceName={{ singular: "product", plural: "products" }}
-        items={sampleProducts}
-        renderItem={(item) => {
-          const { id, name } = item;
-          return (
-            <Checkbox
-              label={name}
-              checked={selectedIds.includes(id)}
-              onChange={() => handleSelectionChange(id)}
-            />
-          );
-        }}
-      />
-    </>
+    <Page title="Offer Products">
+      <Card title="Select Products" sectioned>
+        <ResourceList
+          resourceName={{ singular: "product", plural: "products" }}
+          items={sampleProducts}
+          selectedItems={selectedItems}
+          onSelectionChange={handleSelectionChange}
+          selectable
+          renderItem={(item) => {
+            return (
+              <ResourceItem id={item.id}>
+                <Text variant="bodyMd" fontWeight="bold">
+                  {item.name}
+                </Text>
+              </ResourceItem>
+            );
+          }}
+        />
+        <div style={{ marginTop: 16 }}>
+          <Button primary onClick={() => console.log("Selected:", selectedItems)}>
+            Confirm Selection
+          </Button>
+        </div>
+      </Card>
+    </Page>
   );
 };
 

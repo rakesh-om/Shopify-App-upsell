@@ -3,7 +3,7 @@ import React, { useState } from "react";
 
 const AddonSettings = () => {
   const [limit, setLimit] = useState("any");
-  const [randomize, setRandomize] = useState(false);
+  const [randomize, setRandomize] = useState(false);  
 
   return (
     <>

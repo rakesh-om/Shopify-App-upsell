@@ -1,0 +1,35 @@
+/* SetupHelpBanner.css */
+.setup-card-wrapper {
+  background-color: #fff;
+  border-radius: 10px;
+  padding: 16px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+}
+
+.setup-banner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.setup-banner__content {
+  flex: 1;
+  min-width: 250px;
+}
+
+.setup-banner__desc {
+  margin-top: 8px;
+  margin-bottom: 12px;
+}
+
+.setup-banner__buttons {
+  margin-top: 12px;
+}
+
+.setup-banner__image img {
+  width: 160px;
+  max-width: 100%;
+  object-fit: contain;
+}

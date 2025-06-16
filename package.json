@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "@shopify/app-bridge-react": "^4.1.10",
+    "@shopify/app-bridge-utils": "^3.5.1",
     "mongoose": "^8.15.1"
   },
   "author": "orange",

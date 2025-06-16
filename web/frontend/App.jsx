@@ -1,10 +1,7 @@
 import { BrowserRouter } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { NavMenu } from "@shopify/app-bridge-react";
-
-import Routes from "./Routes";
 import Page1 from "./pages/page1";
-
 import { QueryProvider, PolarisProvider } from "./components";
 
 export default function App() {
@@ -25,8 +22,8 @@ export default function App() {
             <a href="/" rel="home" />
             <a href="/pagename">{t("NavigationMenu.pageName")}</a>
           </NavMenu>
-          <Page1/>
-         
+        
+           <Page1/>
         </QueryProvider>S
       </BrowserRouter>
     </PolarisProvider>

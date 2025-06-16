@@ -17,7 +17,7 @@ import {
   Box,
   Text,
 } from "@shopify/polaris";
-import { FilterMajor } from "@shopify/polaris-icons";
+import { FilterIcon } from "@shopify/polaris-icons";
 import { useAppBridge } from "@shopify/app-bridge-react";
 import { authenticatedFetch } from "@shopify/app-bridge-utils";
 
@@ -57,7 +57,6 @@ const TriggerProductSelector = () => {
   ];
 
   const handleChoiceChange = (value) => {
-    console.log("Choice changed:", value);
     setSelected(value);
     setSelectedProducts([]);
     setSelectedTags([]);
@@ -67,7 +66,6 @@ const TriggerProductSelector = () => {
   const handleSearchByChange = useCallback((value) => setSearchBy(value), []);
 
   const handleProductSelect = (productId) => {
-    console.log("Product toggled:", productId);
     setSelectedProducts((prev) =>
       prev.includes(productId) ? prev.filter((id) => id !== productId) : [...prev, productId]
     );
@@ -75,19 +73,16 @@ const TriggerProductSelector = () => {
 
   const handleTagAdd = () => {
     if (tagInput && !selectedTags.includes(tagInput)) {
-      console.log("Tag added:", tagInput);
       setSelectedTags([...selectedTags, tagInput]);
       setTagInput("");
     }
   };
 
   const handleTagRemove = (tag) => {
-    console.log("Tag removed:", tag);
     setSelectedTags(selectedTags.filter((t) => t !== tag));
   };
 
   const handleFilterSelect = (filterKey) => {
-    console.log("Filter selected:", filterKey);
     if (!appliedFilters.includes(filterKey)) {
       setAppliedFilters([...appliedFilters, filterKey]);
     }
@@ -117,30 +112,26 @@ const TriggerProductSelector = () => {
   });
 
   useEffect(() => {
-    console.log("🔄 useEffect triggered — modalOpen:", modalOpen, "| selected:", selected);
     if (modalOpen && selected[0] === "specific") {
-      console.log("📦 Fetching products from /api/products...");
       setLoading(true);
-
       fetch("/api/products")
         .then((res) => {
           if (!res.ok) throw new Error("Fetch failed with status " + res.status);
           return res.json();
         })
         .then((data) => {
-          console.log("✅ Products received:", data);
-          setProducts(data);
+          setProducts(data.products || []);
           setLoading(false);
         })
         .catch((err) => {
-          console.error("❌ Failed to load products:", err);
+          console.error("❌ Product fetch failed:", err);
           setLoading(false);
         });
     }
   }, [modalOpen, selected]);
 
   return (
-    <>
+    <div className="trigger-selector">
       <Box marginBlockEnd="4">
         <ChoiceList
           title="Offer is triggered for"
@@ -154,7 +145,9 @@ const TriggerProductSelector = () => {
         />
       </Box>
 
-      <Button onClick={toggleModal}>View Products</Button>
+      <Button onClick={toggleModal} className="open-modal-button">
+        View Products
+      </Button>
 
       <Modal
         open={modalOpen}
@@ -163,7 +156,7 @@ const TriggerProductSelector = () => {
         primaryAction={{
           content: "Add",
           onAction: () => {
-            console.log("🎯 Final selected products:", selectedProducts);
+            console.log("Final selected products:", selectedProducts);
             toggleModal();
           },
         }}
@@ -175,27 +168,29 @@ const TriggerProductSelector = () => {
         ]}
       >
         <Modal.Section>
-          <TextContainer spacing="loose">
+          <TextContainer spacing="loose" className="modal-content">
             {selected[0] === "specific" && (
               <>
-                <Box display="flex" alignItems="center" gap="4">
+                <Box className="search-filters" display="flex" alignItems="center" gap="4">
                   <TextField
                     placeholder="Search products"
                     value={search}
                     onChange={handleSearchChange}
                     autoComplete="off"
                     labelHidden
+                    className="search-input"
                   />
                   <Select
                     options={searchOptions}
                     value={searchBy}
                     onChange={handleSearchByChange}
                     labelHidden
+                    className="select-field"
                   />
                   <Popover
                     active={filterPopoverActive}
                     activator={
-                      <Button icon={FilterMajor} onClick={toggleFilterPopover}>
+                      <Button icon={FilterIcon} onClick={toggleFilterPopover}>
                         Add filter +
                       </Button>
                     }
@@ -211,7 +206,7 @@ const TriggerProductSelector = () => {
                 </Box>
 
                 {appliedFilters.length > 0 && (
-                  <Box marginBlockStart="2">
+                  <Box marginBlockStart="2" className="applied-filters">
                     <Text>Filters Applied:</Text>
                     <Box display="flex" flexWrap="wrap" gap="2">
                       {appliedFilters.map((filter, idx) => (
@@ -228,7 +223,7 @@ const TriggerProductSelector = () => {
                   </Box>
                 )}
 
-                <Box marginBlockStart="4">
+                <Box marginBlockStart="4" className="product-list">
                   {loading ? (
                     <Spinner />
                   ) : (
@@ -249,6 +244,7 @@ const TriggerProductSelector = () => {
                                   size="slim"
                                   onClick={() => handleProductSelect(id)}
                                   primary={isSelected}
+                                  className="add-remove-btn"
                                 >
                                   {isSelected ? "Remove" : "Add"}
                                 </Button>
@@ -262,7 +258,7 @@ const TriggerProductSelector = () => {
                 </Box>
 
                 {selectedProducts.length > 0 && (
-                  <Box marginBlockStart="4">
+                  <Box marginBlockStart="4" className="selected-products">
                     <Text>Selected Products:</Text>
                     <Box display="flex" flexWrap="wrap" gap="2" marginBlockStart="2">
                       {selectedProducts.map((id) => {
@@ -279,7 +275,7 @@ const TriggerProductSelector = () => {
             )}
 
             {selected[0] === "tags" && (
-              <>
+              <div className="tag-section">
                 <TextField
                   label="Enter product tags"
                   value={tagInput}
@@ -300,12 +296,12 @@ const TriggerProductSelector = () => {
                     </Tag>
                   ))}
                 </Box>
-              </>
+              </div>
             )}
           </TextContainer>
         </Modal.Section>
       </Modal>
-    </>
+    </div>
   );
 };
 

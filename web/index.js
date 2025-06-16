@@ -41,6 +41,64 @@ app.post(
 app.use(express.json());
 app.use("/api/*", shopify.validateAuthenticatedSession());
 
+// ✅ API: Get All Products (GraphQL)
+app.get("/api/products", async (_req, res) => {
+  console.log('i am in api product 46')
+  try {
+    const client = new shopify.api.clients.Graphql({
+      session: res.locals.shopify.session,
+    });
+
+    const response = await client.query({
+      data: `{
+        products(first: 50) {
+          edges {
+            node {
+              id
+              title
+              handle
+              status
+              totalInventory
+              vendor
+              createdAt
+              updatedAt
+              variants(first: 10) {
+                edges {
+                  node {
+                    id
+                    title
+                    sku
+                    price
+                  }
+                }
+              }
+              images(first: 1) {
+                edges {
+                  node {
+                    url
+                  }
+                }
+              }
+            }
+          }
+        }
+      }`,
+    });
+      console.log('i am in product api') 
+      console.log(response)
+    const products = response.body.data.products.edges.map((edge) => edge.node);
+
+    // 👇 Console kar rahe hain yahan
+    console.log("✅ All Products:", JSON.stringify(products, null, 2));
+
+    res.status(200).json({ products });
+  } catch (error) {
+    console.error("❌ Error fetching products:", error);
+    res.status(500).json({ error: "Error fetching products" });
+  }
+});
+
+
 // ✅ API: Product Count Example (GraphQL)
 app.get("/api/products/count", async (_req, res) => {
   try {
